@@ -161,18 +161,16 @@ class InstagramExtractor(Extractor):
             data = {
                 "expires": text.parse_timestamp(post.get("expiring_at")),
                 "post_id": reel_id,
-                "post_shortcode": shortcode_from_id(reel_id),
-            }
-            if "title" in post:
-                data["highlight_title"] = post["title"]
-
-        else:  # regular image/video post
-            data = {
+ = {
                 "post_id" : post["pk"],
                 "post_shortcode": post["code"],
                 "post_url": "{}/p/{}/".format(self.root, post["code"]),
-                "likes": post.get("like_count", 0),
+                "likes": post.get("like_count", -1),
                 "liked": post.get("has_liked", False),
+                "comment_count": post.get("comment_count", -1),
+                "play_count": post.get("play_count", -1),
+                "ig_play_count": post.get("video_view_count", -1),
+                "video_duration": post.get("video_duration", -1),
                 "pinned": self._extract_pinned(post),
             }
 
